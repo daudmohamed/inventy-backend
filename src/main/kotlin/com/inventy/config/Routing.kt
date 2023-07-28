@@ -19,15 +19,12 @@ fun Application.configureRouting(
     install(Resources)
     install(CORS) {
         allowMethod(HttpMethod.Options)
-        allowMethod(HttpMethod.Get)
-        allowMethod(HttpMethod.Post)
         allowMethod(HttpMethod.Put)
         allowMethod(HttpMethod.Delete)
         allowMethod(HttpMethod.Patch)
+        allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Authorization)
-        allowHeader("MyCustomHeader")
-        allowHost("localhost:3000")
-        allowHost("inventy-frontend.vercel.app")
+        anyHost()
     }
     configureItemRoute(database, barcodeLookupClient)
     configureHealth()
