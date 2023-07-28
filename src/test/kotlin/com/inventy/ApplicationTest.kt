@@ -1,5 +1,6 @@
 package com.inventy
 
+import com.inventy.client.BarcodeLookupClient
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.server.testing.*
@@ -11,7 +12,9 @@ class ApplicationTest {
     @Test
     fun testRoot() = testApplication {
         application {
-            configureRouting()
+            val database = configureDatabase()
+            val barcodeLookupClient = BarcodeLookupClient(environment.config.property("barcode-lookup.api-key").getString())
+            configureRouting(database, barcodeLookupClient)
         }
         client.get("/").apply {
             assertEquals(HttpStatusCode.OK, status)
