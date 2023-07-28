@@ -2,13 +2,14 @@ package com.inventy.plugins
 
 import com.inventy.client.BarcodeLookupClient
 import com.inventy.routes.configureItemRoute
-import io.ktor.server.routing.*
-import io.ktor.server.response.*
-import io.ktor.server.resources.*
+import io.ktor.http.*
 import io.ktor.resources.*
-import io.ktor.server.resources.Resources
-import kotlinx.serialization.Serializable
 import io.ktor.server.application.*
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.resources.*
+import io.ktor.server.resources.Resources
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 
 fun Application.configureRouting(
@@ -16,6 +17,18 @@ fun Application.configureRouting(
     barcodeLookupClient: BarcodeLookupClient
 ) {
     install(Resources)
+    install(CORS) {
+        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
+        allowMethod(HttpMethod.Patch)
+        allowHeader(HttpHeaders.Authorization)
+        allowHeader("MyCustomHeader")
+        allowHost("localhost:3000")
+        allowHost("inventy-frontend.vercel.app")
+    }
     configureItemRoute(database, barcodeLookupClient)
     configureHealth()
     routing {
