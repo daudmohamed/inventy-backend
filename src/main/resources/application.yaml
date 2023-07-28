@@ -1,0 +1,16 @@
+ktor:
+  application:
+    modules:
+      - com.inventy.ApplicationKt.module
+  deployment:
+    port: 8080
+
+database:
+  embedded: false
+  url: 'jdbc:postgresql://localhost:5432/inventy'
+  driver: org.postgresql.Driver
+  user: inventy
+  password: inventy
+
+barcode-lookup:
+  api-key: jbquizcvk482qox1cfxrjcqsbawnob

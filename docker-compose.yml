@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  master:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: inventy
+      POSTGRES_PASSWORD: inventy
+    ports:
+      - "5432:5432"
+    restart: always
