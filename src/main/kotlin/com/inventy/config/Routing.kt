@@ -5,6 +5,7 @@ import com.inventy.routes.configureItemRoute
 import io.ktor.http.*
 import io.ktor.resources.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.resources.*
 import io.ktor.server.resources.Resources
@@ -41,4 +42,5 @@ fun Application.configureHealth() {
             call.respondText("ALIVE")
         }
     }
+
 }

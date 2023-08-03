@@ -45,6 +45,10 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
+    // Auth
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
+
 
     // Database
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")

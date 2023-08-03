@@ -1,6 +1,7 @@
 package com.inventy
 
 import com.inventy.client.BarcodeLookupClient
+import com.inventy.config.configureAuth
 import io.ktor.server.application.*
 import com.inventy.plugins.*
 
@@ -11,6 +12,7 @@ fun main(args: Array<String>): Unit =
 fun Application.module() {
     //configureMonitoring()
     configureSerialization()
+    configureAuth()
     val database = configureDatabase()
     val barcodeLookupClient = BarcodeLookupClient(environment.config.property("barcode-lookup.api-key").getString())
     configureRouting(database,barcodeLookupClient)

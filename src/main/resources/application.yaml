@@ -14,3 +14,7 @@ database:
 
 barcode-lookup:
   api-key: jbquizcvk482qox1cfxrjcqsbawnob
+
+auth0:
+  issuer: 'https://damoad.eu.auth0.com/'
+  audience: inventy-backend
