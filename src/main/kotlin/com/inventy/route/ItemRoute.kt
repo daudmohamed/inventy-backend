@@ -1,42 +1,50 @@
-package com.inventy.routes
+package com.inventy.route
 
 import com.inventy.client.BarcodeLookupClient
 import com.inventy.dto.ItemDTO
-import com.inventy.repository.ItemService
+import com.inventy.repository.ItemRepository
+import com.inventy.repository.UserOwnedRepository.Companion.userContext
+import com.inventy.model.Item
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.jetbrains.exposed.sql.Database
+
+
 
 fun Application.configureItemRoute(
-    database: Database,
     barcodeLookupClient: BarcodeLookupClient
 ) {
-    val itemService = ItemService(database)
 
     routing {
         authenticate ("auth0") {
-
             // List items
             get("/item") {
-                val items = itemService.list()
+                val items = userContext<List<ItemDTO>, ItemRepository>(call.authentication) { repository ->
+                    return@userContext repository.list()
+                        .map(Item::toDTO)
+                }
+
                 call.respond(HttpStatusCode.OK, items)
             }
             // Create item
             post("/item") {
                 val itemDTO = call.receive<ItemDTO>()
-                val id = itemService.create(itemDTO)
+                val id = userContext<Long, ItemRepository>(call.authentication) { repository ->
+                    return@userContext repository.create(itemDTO)
+                }
                 call.respond(HttpStatusCode.Created, id)
             }
             // Read item
             get("/item/{id}") {
                 val id = call.parameters["id"]?.toLong() ?: throw IllegalArgumentException("Invalid ID")
-                val item = itemService.read(id)
+                val item = userContext<Item?, ItemRepository>(call.authentication) { repository ->
+                    return@userContext repository.read(id)
+                }
                 if (item != null) {
-                    call.respond(HttpStatusCode.OK, item)
+                    call.respond(HttpStatusCode.OK, item.toDTO())
                 } else {
                     call.respond(HttpStatusCode.NotFound)
                 }
@@ -45,19 +53,26 @@ fun Application.configureItemRoute(
             put("/item/{id}") {
                 val id = call.parameters["id"]?.toLong() ?: throw IllegalArgumentException("Invalid ID")
                 val itemDTO = call.receive<ItemDTO>()
-                itemService.update(id, itemDTO)
+                userContext<Unit, ItemRepository>(call.authentication) { repository ->
+                    repository.update(id, itemDTO)
+                }
                 call.respond(HttpStatusCode.OK)
             }
             // Delete item
             delete("/item/{id}") {
                 val id = call.parameters["id"]?.toLong() ?: throw IllegalArgumentException("Invalid ID")
-                itemService.delete(id)
+                userContext<Unit, ItemRepository>(call.authentication) { repository ->
+                    repository.delete(id)
+                }
                 call.respond(HttpStatusCode.OK)
             }
 
             // List shopping items
             get("/shopping") {
-                val items = itemService.shoppingList()
+                val items = userContext<List<ItemDTO>, ItemRepository>(call.authentication) { repository ->
+                    return@userContext repository.shoppingList()
+                        .map(Item::toDTO)
+                }
                 call.respond(HttpStatusCode.OK, items)
             }
 
@@ -68,12 +83,13 @@ fun Application.configureItemRoute(
                     call.respond(HttpStatusCode.NotFound)
                     return@post
                 }
-                val item = ItemDTO(
-                    name = products.get(0).title ?: "",
-                    current = 0,
-                    target = 1
-                )
-                val id = itemService.create(item)
+                val id = userContext<Long, ItemRepository>(call.authentication) { repository ->
+                    return@userContext repository.create(ItemDTO(
+                        name = products[0].title ?: "",
+                        current = 0,
+                        target = 1
+                    ))
+                }
                 call.respond(HttpStatusCode.Created, id)
             }
         }

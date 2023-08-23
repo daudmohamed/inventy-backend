@@ -6,9 +6,11 @@ ktor:
     port: 8080
 
 database:
-  embedded:  $EMBEDDED
+  embedded: false
   url: 'jdbc:postgresql://localhost:5432/inventy'
-  driver: org.postgresql.Driver
+  host: localhost
+  port: 5432
+  databaseName: inventy
   user: inventy
   password: inventy
 

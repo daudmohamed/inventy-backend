@@ -1,6 +1,5 @@
 package com.inventy.client
 
-import com.inventy.config.defaultClient
 import com.inventy.dto.BarcodeProductsDTO
 import io.ktor.client.*
 import io.ktor.client.call.*
