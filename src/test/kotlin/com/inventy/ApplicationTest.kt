@@ -20,12 +20,12 @@ class ApplicationTest {
     fun testRoot() = testApplication {
         application {
             DatabaseFactory(
-                dbHost = environment.config.property("database.host").getString(),
-                dbPort = environment.config.property("database.port").getString(),
-                dbUser = environment.config.property("database.user").getString(),
-                dbPassword = environment.config.property("database.password").getString(),
-                databaseName = environment.config.property("database.databaseName").getString(),
-                embedded = environment.config.property("database.embedded").getString().toBoolean(),
+                dbHost = "",
+                dbPort = "",
+                dbUser = "",
+                dbPassword = "",
+                databaseName = "",
+                embedded = true,
             ).init()
             val barcodeApiKey = environment.config.property("barcode-lookup.api-key").getString()
             val auth0Host = environment.config.property("auth0.issuer").getString()
