@@ -7,5 +7,5 @@ FROM openjdk:17
 EXPOSE 8080:8080
 RUN mkdir /app
 ENV EMBEDDED true
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/ktor-docker-sample.jar
-ENTRYPOINT ["java","-jar","/app/ktor-docker-sample.jar"]
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/inventy-backend.jar
+ENTRYPOINT ["java","-jar","/app/inventy-backend.jar"]

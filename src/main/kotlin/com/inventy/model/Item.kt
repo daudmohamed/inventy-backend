@@ -1,12 +1,13 @@
 package com.inventy.model
 
-import org.jetbrains.exposed.sql.Table
+import com.inventy.dto.ItemDTO
 
-object Items : Table() {
-    val id = long("id").autoIncrement()
-    val name = varchar("title", 128)
-    val current = integer("current").default(1)
-    val target = integer("target").default(2)
 
-    override val primaryKey = PrimaryKey(id)
+class Item (
+    override val id: Long,
+    val name: String,
+    val current: Int,
+    val target: Int
+) : Model {
+    fun toDTO() = ItemDTO(id, name, current, target)
 }

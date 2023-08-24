@@ -1,4 +1,4 @@
-package com.inventy.config
+package com.inventy.client
 
 import io.ktor.client.*
 import io.ktor.client.plugins.compression.*

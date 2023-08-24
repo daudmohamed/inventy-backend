@@ -1,4 +1,4 @@
-package com.inventy.plugins
+package com.inventy.config
 
 import io.ktor.server.plugins.callloging.*
 import org.slf4j.event.*
