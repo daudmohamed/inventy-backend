@@ -88,7 +88,7 @@ class DatabaseFactory(
         if (embedded) {
             return HikariDataSource().apply {
                 dataSourceClassName = JdbcDataSource::class.qualifiedName
-                addDataSourceProperty("url", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")
+                addDataSourceProperty("url", "jdbc:h2:mem:inventy;DB_CLOSE_DELAY=-1")
                 addDataSourceProperty("user", "root")
                 addDataSourceProperty("password", "")
                 maximumPoolSize = 10
