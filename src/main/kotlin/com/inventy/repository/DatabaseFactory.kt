@@ -32,8 +32,6 @@ class DatabaseFactory(
     }
 
     private fun hikari(): HikariDataSource {
-        println("Setting up DB")
-        println(dbHost + databaseName + dbUser + dbPassword + dbPort + embedded)
         if (embedded) {
             return HikariDataSource().apply {
                 dataSourceClassName = JdbcDataSource::class.qualifiedName
