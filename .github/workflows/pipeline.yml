@@ -24,7 +24,7 @@ jobs:
           java-version: '17'
 
       - name: Build & Test with Gradle
-        run: ./gradlew build --stacktrace --debug
+        run: ./gradlew build --stacktrace
 
   deploy:
     name: Deploy Image
