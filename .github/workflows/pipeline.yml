@@ -27,6 +27,7 @@ jobs:
         run: ./gradlew build --stacktrace
 
   deploy:
+    needs: build
     name: Deploy Image
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -52,8 +53,8 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: 142942682864.dkr.ecr.eu-north-1.amazonaws.com/inventy-backend
+          ECR_REPOSITORY: inventy-backend
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
