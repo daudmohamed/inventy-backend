@@ -27,6 +27,7 @@ jobs:
         run: ./gradlew build --stacktrace
 
   deploy:
+    needs: build
     name: Deploy Image
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
