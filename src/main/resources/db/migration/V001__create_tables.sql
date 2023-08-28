@@ -14,7 +14,7 @@ create table Provider (
     provider            int default 0,
 
     constraint unique_user_per_provider unique (provider_id, provider),
-    constraint fk_user FOREIGN KEY(user_id) REFERENCES "user"(id)
+    constraint fk_provider_user FOREIGN KEY(user_id) REFERENCES "user"(id)
 
 );
 
@@ -25,7 +25,7 @@ create table Item (
     current             int default 1,
     target              int default 1,
 
-    constraint fk_user FOREIGN KEY(user_id) REFERENCES "user"(id)
+    constraint fk_item_user FOREIGN KEY(user_id) REFERENCES "user"(id)
 
 );
 
