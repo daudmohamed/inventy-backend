@@ -80,7 +80,9 @@ class DatabaseFactory(
 
     fun init() {
         Database.connect(hikari())
-        val flyway = Flyway.configure().dataSource(hikari()).load()
+        val flyway = Flyway.configure()
+            .dataSource(hikari())
+            .load()
         flyway.migrate()
     }
 
