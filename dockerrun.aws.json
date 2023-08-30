@@ -1,0 +1,14 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "name": "inventy-backend",
+  "image": {
+    "Name": "142942682864.dkr.ecr.eu-north-1.amazonaws.com/inventy-backend",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "HostPort": "8080",
+      "containerPort": "8080"
+    }
+  ]
+}

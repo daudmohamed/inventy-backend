@@ -2,13 +2,14 @@ ktor:
   application:
     modules:
       - com.inventy.ApplicationKt.module
-  development: true
   deployment:
     port: 8080
+    maxInitialLineLength: 2048
+    maxHeaderSize: 1024
+    maxChunkSize: 42
 
 database:
   embedded: false
-  url: 'jdbc:postgresql://localhost:5432/inventy'
   host: localhost
   port: 5432
   databaseName: inventy
