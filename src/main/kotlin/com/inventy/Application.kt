@@ -6,6 +6,8 @@ import com.inventy.config.configureAuth
 import com.inventy.route.configureRouting
 import io.ktor.server.application.*
 import com.inventy.plugins.*
+import com.typesafe.config.ConfigFactory
+import io.ktor.server.config.*
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -29,3 +31,4 @@ fun Application.module() {
     val auth0Client = Auth0Client(auth0Host)
     configureRouting(barcodeLookupClient, auth0Client)
 }
+
